@@ -1,0 +1,74 @@
+﻿<Window x:Class="Chat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chat"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="600" MinWidth="600" MinHeight="600" MaxWidth="600" MaxHeight="600" Foreground="#FF00FFE2" Background="White">
+    <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Label x:Name="localIPLabel" Content="本地IP：" Margin="5,5,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"/>
+                <TextBox x:Name="localIPTextBox" Height="23" MaxLines="1" Margin="0,5,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Width="120" IsTabStop="False" AllowDrop="False" IsUndoEnabled="False" UndoLimit="0" MaxLength="15" HorizontalScrollBarVisibility="Disabled" Background="{x:Null}" BorderThickness="2" BorderBrush="#FF5F667A"/>
+                <Label x:Name="localPortLabel" Content="本地端口：" Margin="5,5,0,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" BorderThickness="0"/>
+                <TextBox x:Name="localPortTextBox" Margin="0,5,5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="45" Text="2222" AllowDrop="False" IsTabStop="False" IsUndoEnabled="False" MaxLines="1" UndoLimit="0" MaxLength="5" Background="{x:Null}" BorderThickness="2" BorderBrush="#FF5F667A"/>
+                <Label x:Name="desIPLabel" Content="目的IP：" Margin="5,5,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"/>
+                <TextBox x:Name="desIPTextBox" Height="23" Margin="0,5,5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Width="120" AllowDrop="False" IsTabStop="False" MaxLines="1" IsUndoEnabled="False" UndoLimit="0" MaxLength="15" HorizontalScrollBarVisibility="Disabled" Background="{x:Null}" BorderThickness="2" BorderBrush="#FF5F667A"/>
+                <Label x:Name="desPortLabel" Content="目的端口：" Margin="5,5,0,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
+                <TextBox x:Name="desPortTextBox" Margin="0,5,5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="45" Text="2222" AllowDrop="False" IsTabStop="False" MaxLines="1" IsUndoEnabled="False" UndoLimit="0" MaxLength="5" Background="{x:Null}" BorderThickness="2" BorderBrush="#FF5F667A"/>
+            </StackPanel>
+            <Separator Margin="0"/>
+        </StackPanel>
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Bottom" Margin="5" BorderThickness="0">
+            <StackPanel x:Name="msgSP">
+            </StackPanel>
+        </ScrollViewer>
+        <DockPanel Grid.Row="2">
+            <Separator Margin="0" DockPanel.Dock="Top" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+            <TextBox x:Name="writeTextBox" TextWrapping="Wrap" DockPanel.Dock="Top" HorizontalScrollBarVisibility="Auto" Height="100" AutoWordSelection="True" FontSize="21.333" AcceptsReturn="True" AcceptsTab="True" Margin="5" BorderThickness="0" Background="{x:Null}" AllowDrop="True" PreviewDragOver="writeTextBoxPreviewDragOver" PreviewDrop="writeTextBoxPreviewDrop"/>
+            <Button x:Name="sendButton" Content="发送" Height="25" Width="75" DockPanel.Dock="Right" Margin="5" Padding="0" FontSize="16" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" IsTabStop="False" Click="sendButtonClick">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA4A4A4" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="listenButton" Content="等待连接" Height="25" Width="75" Margin="5" Padding="0" HorizontalAlignment="Left" IsTabStop="False" FontWeight="Bold" FontSize="16" Click="listenButtonClick">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA4A4A4" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="connectButton" Content="连接" Height="25" Width="75" Margin="5" Padding="0" HorizontalAlignment="Left" IsTabStop="False" FontWeight="Bold" FontSize="16" Click="connectButtonClick">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA4A4A4" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </DockPanel>
+        <StatusBar Grid.Row="3" Grid.RowSpan="2" Height="20" Margin="0" BorderThickness="0">
+            <TextBlock x:Name="statusTextBlock" TextWrapping="Wrap" Text="就绪"/>
+        </StatusBar>
+    </Grid>
+    <Window.Resources>
+        <RoutedUICommand x:Key="SendMsg" Text="SendMsg" />
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+Enter" Command="{StaticResource SendMsg}"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource SendMsg}" Executed="sendButtonClick"/>
+    </Window.CommandBindings>
+</Window>
