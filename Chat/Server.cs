@@ -29,6 +29,9 @@ namespace Chat
         public delegate void EnableSendButton(bool flag);
         public EnableSendButton enableSendButton;
 
+        public delegate void ChangelistenButton(string str);
+        public ChangelistenButton changelistenButton;
+
         public delegate void SetInfo(string desIP, string desPort, string localIP, string localPort);
         public SetInfo setInfo;
 
@@ -66,6 +69,7 @@ namespace Chat
                     changeStatusTextBlock(string.Format("{1}：{0}已连接", clientDesIP.Address.ToString(), DateTime.Now));
                     setInfo(clientDesIP.Address.ToString(), clientDesIP.Port.ToString(), clientLocalIP.Address.ToString(), clientLocalIP.Port.ToString());
                     enableSendButton(true);
+                    changelistenButton("断开");
                     if (threadIfOnline == null || threadIfOnline.IsCompleted == true)
                     {
                         threadIfOnline = new Task(IfOnline);

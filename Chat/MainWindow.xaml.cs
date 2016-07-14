@@ -30,6 +30,7 @@ namespace Chat
         {
             if (listenButton.Content.ToString() == "等待连接") waitingConnect();
             else if (listenButton.Content.ToString() == "停止等待") stopWaitConnect();
+            else if (listenButton.Content.ToString() == "断开") stopWaitConnect();
         }
 
         private void waitingConnect()
@@ -49,6 +50,7 @@ namespace Chat
             server.enableAll += () => sendButton.Dispatcher.Invoke(new Server.EnableAll(enableAllCallback));
             server.enableAll += () => writeTextBox.Dispatcher.Invoke(new Server.EnableAll(enableAllCallback));
             server.enableSendButton += flag => sendButton.Dispatcher.Invoke(new Server.EnableSendButton(enableSendCallback), flag);
+            server.changelistenButton += str => listenButton.Dispatcher.Invoke(new Server.ChangelistenButton(changelistenButtonCallback), str);
             server.printMsg += msg => msgSP.Dispatcher.Invoke(new Server.PrintMsg(printMsgCallback), msg);
             server.setInfo += (desIP, desPort, localIP, localPort) => desIPTextBox.Dispatcher.Invoke(new Server.SetInfo(setDesIPAndPortCallback), desIP, desPort, localIP, localPort);
             connectButton.IsEnabled = false;
@@ -163,6 +165,11 @@ namespace Chat
             sendButton.IsEnabled = false;
             listenButton.Content = "等待连接";
             connectButton.Content = "连接";
+        }
+
+        private void changelistenButtonCallback(string str)
+        {
+            listenButton.Content = str;
         }
 
         private void sendButtonClick(object sender, RoutedEventArgs e)

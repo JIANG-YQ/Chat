@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chat"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600" MinWidth="600" MinHeight="600" MaxWidth="600" MaxHeight="600" Foreground="#FF00FFE2" Background="White">
+        Title="Chat" Height="600" Width="600" MinWidth="600" MinHeight="600" MaxWidth="600" MaxHeight="600" Foreground="#FF00FFE2" Background="White">
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
